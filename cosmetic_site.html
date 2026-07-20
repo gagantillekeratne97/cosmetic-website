@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cirenne — Considered Cosmetics</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+  tailwind.config = {
+    theme: {
+      extend: {
+        colors: {
+          plum: {
+            DEFAULT: '#2B1420',
+            50: '#F6EFF1',
+            100: '#E9D5DA',
+            700: '#3E1E2E',
+            900: '#1C0D15',
+          },
+          porcelain: '#F7F2ED',
+          stone: '#EFE7DF',
+          gold: '#C9A768',
+          rose: '#D9AEB0',
+          sage: '#8A9A82',
+          ink: '#2A2320',
+        },
+        fontFamily: {
+          serif: ['Fraunces', 'serif'],
+          sans: ['Inter', 'sans-serif'],
+        },
+      }
+    }
+  }
+</script>
+<style>
+  html { scroll-behavior: smooth; }
+  body { font-family: 'Inter', sans-serif; background: #F7F2ED; color: #2A2320; }
+  .font-display { font-family: 'Fraunces', serif; }
+  .reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.8s ease, transform 0.8s ease; }
+  .reveal.in { opacity: 1; transform: translateY(0); }
+  .swatch { transition: transform 0.35s cubic-bezier(.2,.8,.2,1), box-shadow 0.35s ease; }
+  .swatch:hover { transform: translateY(-10px) scale(1.04); }
+  .num-label { font-variant-numeric: tabular-nums; letter-spacing: 0.08em; }
+  ::selection { background: #C9A768; color: #1C0D15; }
+  .grain { position: relative; }
+  .grain::after {
+    content: '';
+    position: absolute; inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.05'/%3E%3C/svg%3E");
+    pointer-events: none;
+  }
+  .underline-grow { position: relative; }
+  .underline-grow::after {
+    content: ''; position: absolute; left: 0; bottom: -4px; height: 1px; width: 0%;
+    background: currentColor; transition: width 0.4s ease;
+  }
+  .underline-grow:hover::after { width: 100%; }
+  .marquee-track { animation: marquee 28s linear infinite; }
+  @keyframes marquee { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+  @media (prefers-reduced-motion: reduce) {
+    .marquee-track { animation: none; }
+    .reveal { opacity: 1; transform: none; transition: none; }
+  }
+  input[type="range"] { -webkit-appearance: none; height: 2px; background: #C9A768; border-radius: 2px; }
+  input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none; width: 16px; height: 16px; border-radius: 50%;
+    background: #2B1420; border: 2px solid #C9A768; cursor: pointer; margin-top: -7px;
+  }
+</style>
+</head>
+<body class="antialiased">
+
+<!-- NAV -->
+<header class="fixed top-0 left-0 right-0 z-50 transition-colors duration-500" id="site-header">
+  <div class="max-w-7xl mx-auto px-6 md:px-10 flex items-center justify-between h-20">
+    <a href="#" class="font-display text-2xl tracking-wide text-porcelain" id="logo">Cirenne</a>
+    <nav class="hidden md:flex items-center gap-10 text-sm text-porcelain/90">
+      <a href="#collection" class="underline-grow">Collection</a>
+      <a href="#formulation" class="underline-grow">Formulation</a>
+      <a href="#matcher" class="underline-grow">Shade Match</a>
+      <a href="#words" class="underline-grow">Reviews</a>
+    </nav>
+    <a href="#collection" class="hidden md:inline-block text-sm border border-porcelain/60 text-porcelain px-5 py-2 rounded-full hover:bg-porcelain hover:text-plum transition-colors duration-300">Shop the edit</a>
+    <button class="md:hidden text-porcelain" id="menu-btn" aria-label="Open menu">
+      <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+    </button>
+  </div>
+</header>
+
+<!-- HERO -->
+<section class="relative bg-plum text-porcelain min-h-screen flex flex-col justify-center overflow-hidden grain">
+  <div class="absolute inset-0 opacity-40" style="background: radial-gradient(ellipse at 75% 20%, #3E1E2E 0%, #2B1420 55%, #1C0D15 100%);"></div>
+
+  <div class="relative max-w-7xl mx-auto px-6 md:px-10 pt-32 pb-20 w-full">
+    <div class="grid md:grid-cols-12 gap-8 items-end">
+      <div class="md:col-span-8">
+        <p class="text-gold text-xs tracking-[0.3em] uppercase mb-6 num-label">Est. Nine Years in Formulation</p>
+        <h1 class="font-display font-normal leading-[0.95] text-[13vw] md:text-[6.2vw] tracking-tight">
+          Skin has<br><span class="italic font-light text-rose">opinions.</span><br>We listen.
+        </h1>
+      </div>
+      <div class="md:col-span-4 md:pb-4">
+        <p class="text-porcelain/70 text-base md:text-lg leading-relaxed max-w-sm">
+          Cirenne pairs dermatologist-grade actives with textures worth lingering over — cosmetics built around what your skin is actually doing, not a trend cycle.
+        </p>
+        <a href="#collection" class="inline-flex items-center gap-3 mt-8 text-sm border-b border-gold pb-1 text-gold hover:gap-5 transition-all duration-300">
+          Explore the collection
+          <span>&rarr;</span>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- signature shade strip -->
+  <div class="relative border-t border-porcelain/15 mt-auto">
+    <div class="max-w-7xl mx-auto px-6 md:px-10 py-6 flex items-center gap-6 overflow-x-auto">
+      <span class="text-xs text-porcelain/50 tracking-[0.2em] uppercase shrink-0">12 Undertones, Matched Precisely</span>
+      <div class="flex gap-2 shrink-0">
+        <div class="w-8 h-8 rounded-full shrink-0" style="background:#F4DCC8"></div>
+        <div class="w-8 h-8 rounded-full shrink-0" style="background:#E8C3A2"></div>
+        <div class="w-8 h-8 rounded-full shrink-0" style="background:#D9A87E"></div>
+        <div class="w-8 h-8 rounded-full shrink-0" style="background:#C68F62"></div>
+        <div class="w-8 h-8 rounded-full shrink-0" style="background:#A9724A"></div>
+        <div class="w-8 h-8 rounded-full shrink-0" style="background:#8B5A38"></div>
+        <div class="w-8 h-8 rounded-full shrink-0" style="background:#6B4028"></div>
+        <div class="w-8 h-8 rounded-full shrink-0" style="background:#4A2A18"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MARQUEE STRIP -->
+<div class="bg-gold/90 text-plum py-3 overflow-hidden whitespace-nowrap">
+  <div class="marquee-track inline-block">
+    <span class="text-xs tracking-[0.25em] uppercase mx-6">Dermatologist Reviewed</span>
+    <span class="text-xs tracking-[0.25em] uppercase mx-6">·</span>
+    <span class="text-xs tracking-[0.25em] uppercase mx-6">Cruelty Free</span>
+    <span class="text-xs tracking-[0.25em] uppercase mx-6">·</span>
+    <span class="text-xs tracking-[0.25em] uppercase mx-6">Small Batch Milled</span>
+    <span class="text-xs tracking-[0.25em] uppercase mx-6">·</span>
+    <span class="text-xs tracking-[0.25em] uppercase mx-6">Fragrance Optional</span>
+    <span class="text-xs tracking-[0.25em] uppercase mx-6">·</span>
+    <span class="text-xs tracking-[0.25em] uppercase mx-6">Dermatologist Reviewed</span>
+    <span class="text-xs tracking-[0.25em] uppercase mx-6">·</span>
+    <span class="text-xs tracking-[0.25em] uppercase mx-6">Cruelty Free</span>
+    <span class="text-xs tracking-[0.25em] uppercase mx-6">·</span>
+    <span class="text-xs tracking-[0.25em] uppercase mx-6">Small Batch Milled</span>
+    <span class="text-xs tracking-[0.25em] uppercase mx-6">·</span>
+    <span class="text-xs tracking-[0.25em] uppercase mx-6">Fragrance Optional</span>
+    <span class="text-xs tracking-[0.25em] uppercase mx-6">·</span>
+  </div>
+</div>
+
+<!-- COLLECTION -->
+<section id="collection" class="max-w-7xl mx-auto px-6 md:px-10 py-28">
+  <div class="reveal flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-16">
+    <div>
+      <p class="text-xs tracking-[0.3em] uppercase text-sage mb-4">The Edit</p>
+      <h2 class="font-display text-4xl md:text-5xl leading-tight max-w-xl">Four essentials, built to be worn together.</h2>
+    </div>
+    <p class="text-ink/60 max-w-sm text-sm leading-relaxed">Each formula is developed to layer cleanly — no pilling, no competing textures, no guesswork on order of application.</p>
+  </div>
+
+  <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+    <!-- Product 1 -->
+    <div class="reveal group">
+      <div class="aspect-[4/5] rounded-2xl mb-5 relative overflow-hidden" style="background: linear-gradient(160deg, #E8C3A2 0%, #D9AEB0 100%);">
+        <div class="absolute inset-0 flex items-center justify-center">
+          <div class="w-16 h-28 bg-plum/90 rounded-t-full rounded-b-lg shadow-xl group-hover:-translate-y-2 transition-transform duration-500"></div>
+        </div>
+        <span class="absolute top-4 left-4 text-[10px] tracking-[0.2em] uppercase bg-porcelain/90 text-plum px-2.5 py-1 rounded-full">Bestseller</span>
+      </div>
+      <h3 class="font-display text-xl mb-1">Second Skin Serum</h3>
+      <p class="text-sm text-ink/60 mb-3">Barrier-repair, 5% niacinamide</p>
+      <p class="text-sm">$58</p>
+    </div>
+    <!-- Product 2 -->
+    <div class="reveal group" style="transition-delay: 80ms;">
+      <div class="aspect-[4/5] rounded-2xl mb-5 relative overflow-hidden" style="background: linear-gradient(160deg, #C9A768 0%, #8A9A82 100%);">
+        <div class="absolute inset-0 flex items-center justify-center">
+          <div class="w-20 h-20 bg-porcelain/95 rounded-full shadow-xl group-hover:-translate-y-2 transition-transform duration-500"></div>
+        </div>
+      </div>
+      <h3 class="font-display text-xl mb-1">Bare Density Balm</h3>
+      <p class="text-sm text-ink/60 mb-3">Sheer, buildable coverage</p>
+      <p class="text-sm">$42</p>
+    </div>
+    <!-- Product 3 -->
+    <div class="reveal group" style="transition-delay: 160ms;">
+      <div class="aspect-[4/5] rounded-2xl mb-5 relative overflow-hidden" style="background: linear-gradient(160deg, #D9AEB0 0%, #C68F62 100%);">
+        <div class="absolute inset-0 flex items-center justify-center">
+          <div class="w-14 h-14 bg-plum rounded-full shadow-xl group-hover:-translate-y-2 transition-transform duration-500"></div>
+        </div>
+        <span class="absolute top-4 left-4 text-[10px] tracking-[0.2em] uppercase bg-porcelain/90 text-plum px-2.5 py-1 rounded-full">New</span>
+      </div>
+      <h3 class="font-display text-xl mb-1">Warm Hour Blush</h3>
+      <p class="text-sm text-ink/60 mb-3">Cream-to-powder finish</p>
+      <p class="text-sm">$28</p>
+    </div>
+    <!-- Product 4 -->
+    <div class="reveal group" style="transition-delay: 240ms;">
+      <div class="aspect-[4/5] rounded-2xl mb-5 relative overflow-hidden" style="background: linear-gradient(160deg, #8A9A82 0%, #2B1420 100%);">
+        <div class="absolute inset-0 flex items-center justify-center">
+          <div class="w-16 h-24 bg-porcelain/95 rounded-lg shadow-xl group-hover:-translate-y-2 transition-transform duration-500"></div>
+        </div>
+      </div>
+      <h3 class="font-display text-xl mb-1">Low Light Oil</h3>
+      <p class="text-sm text-ink/60 mb-3">Overnight recovery blend</p>
+      <p class="text-sm">$64</p>
+    </div>
+  </div>
+</section>
+
+<!-- FORMULATION / PHILOSOPHY -->
+<section id="formulation" class="bg-stone py-28">
+  <div class="max-w-7xl mx-auto px-6 md:px-10 grid md:grid-cols-2 gap-16 items-center">
+    <div class="reveal order-2 md:order-1">
+      <div class="grid grid-cols-2 gap-4">
+        <div class="aspect-square rounded-2xl" style="background: linear-gradient(200deg, #F4DCC8, #D9AEB0);"></div>
+        <div class="aspect-square rounded-2xl mt-8" style="background: linear-gradient(200deg, #8A9A82, #2B1420);"></div>
+        <div class="aspect-square rounded-2xl -mt-8" style="background: linear-gradient(200deg, #C9A768, #A9724A);"></div>
+        <div class="aspect-square rounded-2xl" style="background: linear-gradient(200deg, #E8C3A2, #6B4028);"></div>
+      </div>
+    </div>
+    <div class="reveal order-1 md:order-2">
+      <p class="text-xs tracking-[0.3em] uppercase text-sage mb-4">Formulation Standards</p>
+      <h2 class="font-display text-4xl md:text-5xl leading-tight mb-8">Three lines nobody skips, even under deadline.</h2>
+      <ul class="space-y-6">
+        <li class="flex gap-5">
+          <span class="font-display text-2xl text-gold shrink-0 w-10">01</span>
+          <div>
+            <h3 class="font-medium mb-1">Concentration over marketing</h3>
+            <p class="text-sm text-ink/60 leading-relaxed">Active percentages are printed on every carton — not buried in a claims sheet.</p>
+          </div>
+        </li>
+        <li class="flex gap-5">
+          <span class="font-display text-2xl text-gold shrink-0 w-10">02</span>
+          <div>
+            <h3 class="font-medium mb-1">Patch-tested, not just lab-tested</h3>
+            <p class="text-sm text-ink/60 leading-relaxed">Every batch goes through a 200-person independent panel before release.</p>
+          </div>
+        </li>
+        <li class="flex gap-5">
+          <span class="font-display text-2xl text-gold shrink-0 w-10">03</span>
+          <div>
+            <h3 class="font-medium mb-1">Recyclable or nothing</h3>
+            <p class="text-sm text-ink/60 leading-relaxed">Glass, aluminum, or refill pouch. We turned down a launch over its cap.</p>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- SHADE MATCHER (SIGNATURE INTERACTIVE) -->
+<section id="matcher" class="bg-plum text-porcelain py-28 grain">
+  <div class="max-w-7xl mx-auto px-6 md:px-10">
+    <div class="reveal text-center max-w-xl mx-auto mb-16">
+      <p class="text-xs tracking-[0.3em] uppercase text-gold mb-4">Shade Match</p>
+      <h2 class="font-display text-4xl md:text-5xl leading-tight">Drag to find your undertone.</h2>
+      <p class="text-porcelain/60 text-sm mt-4">Bare Density Balm comes in 12 shades. Slide to preview where you'd likely land.</p>
+    </div>
+
+    <div class="reveal max-w-2xl mx-auto">
+      <div class="w-full h-40 rounded-2xl mb-6 flex items-center justify-center transition-colors duration-300" id="shade-preview" style="background:#C68F62;">
+        <span class="font-display text-2xl" id="shade-name">Warm Amber</span>
+      </div>
+      <input type="range" min="0" max="7" value="3" step="1" id="shade-slider" class="w-full">
+      <div class="flex justify-between mt-3 text-[11px] text-porcelain/50 tracking-[0.15em] uppercase">
+        <span>Fair Cool</span>
+        <span>Deep Warm</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  const shades = [
+    { color: '#F4DCC8', name: 'Fair Cool' },
+    { color: '#E8C3A2', name: 'Light Neutral' },
+    { color: '#D9A87E', name: 'Light Warm' },
+    { color: '#C68F62', name: 'Warm Amber' },
+    { color: '#A9724A', name: 'Medium Warm' },
+    { color: '#8B5A38', name: 'Deep Neutral' },
+    { color: '#6B4028', name: 'Deep Warm' },
+    { color: '#4A2A18', name: 'Rich Cool' },
+  ];
+  const slider = document.getElementById('shade-slider');
+  const preview = document.getElementById('shade-preview');
+  const nameEl = document.getElementById('shade-name');
+  slider.addEventListener('input', () => {
+    const s = shades[slider.value];
+    preview.style.background = s.color;
+    nameEl.textContent = s.name;
+  });
+</script>
+
+<!-- TESTIMONIALS -->
+<section id="words" class="max-w-7xl mx-auto px-6 md:px-10 py-28">
+  <p class="reveal text-xs tracking-[0.3em] uppercase text-sage mb-4">In Their Words</p>
+  <h2 class="reveal font-display text-4xl md:text-5xl leading-tight max-w-xl mb-16">Skin doesn't lie, and neither do our reviews.</h2>
+
+  <div class="grid md:grid-cols-3 gap-8">
+    <div class="reveal border-t border-ink/10 pt-6">
+      <p class="font-display text-lg italic leading-relaxed mb-6">"Three weeks in and my derm actually asked what I switched to."</p>
+      <p class="text-sm text-ink/60">Naomi R. — Second Skin Serum</p>
+    </div>
+    <div class="reveal border-t border-ink/10 pt-6" style="transition-delay: 100ms;">
+      <p class="font-display text-lg italic leading-relaxed mb-6">"The balm melts in without that heavy, cakey feeling by 3pm."</p>
+      <p class="text-sm text-ink/60">Priya K. — Bare Density Balm</p>
+    </div>
+    <div class="reveal border-t border-ink/10 pt-6" style="transition-delay: 200ms;">
+      <p class="font-display text-lg italic leading-relaxed mb-6">"First blush that survives a Colombo commute without fading."</p>
+      <p class="text-sm text-ink/60">Amaya S. — Warm Hour Blush</p>
+    </div>
+  </div>
+</section>
+
+<!-- NEWSLETTER CTA -->
+<section class="bg-stone py-24">
+  <div class="max-w-3xl mx-auto px-6 md:px-10 text-center reveal">
+    <h2 class="font-display text-3xl md:text-4xl mb-4">First access to new formulas.</h2>
+    <p class="text-ink/60 text-sm mb-8">One email a month. No skincare fear-mongering, ever.</p>
+    <form class="flex flex-col sm:flex-row gap-3 justify-center max-w-md mx-auto" onsubmit="event.preventDefault(); this.querySelector('button').textContent='Subscribed';">
+      <input type="email" required placeholder="you@email.com" class="flex-1 px-5 py-3 rounded-full border border-ink/15 bg-porcelain text-sm focus:outline-none focus:ring-2 focus:ring-gold">
+      <button type="submit" class="px-6 py-3 rounded-full bg-plum text-porcelain text-sm hover:bg-plum-700 transition-colors">Subscribe</button>
+    </form>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="bg-plum text-porcelain/70 pt-16 pb-8">
+  <div class="max-w-7xl mx-auto px-6 md:px-10 grid md:grid-cols-4 gap-10 mb-12">
+    <div>
+      <p class="font-display text-2xl text-porcelain mb-3">Cirenne</p>
+      <p class="text-sm leading-relaxed">Considered cosmetics, formulated in small batches.</p>
+    </div>
+    <div>
+      <p class="text-xs tracking-[0.2em] uppercase text-gold mb-4">Shop</p>
+      <ul class="space-y-2 text-sm">
+        <li><a href="#collection" class="hover:text-porcelain">Serums</a></li>
+        <li><a href="#collection" class="hover:text-porcelain">Complexion</a></li>
+        <li><a href="#collection" class="hover:text-porcelain">Color</a></li>
+      </ul>
+    </div>
+    <div>
+      <p class="text-xs tracking-[0.2em] uppercase text-gold mb-4">Company</p>
+      <ul class="space-y-2 text-sm">
+        <li><a href="#formulation" class="hover:text-porcelain">Formulation Standards</a></li>
+        <li><a href="#" class="hover:text-porcelain">Ingredients</a></li>
+        <li><a href="#" class="hover:text-porcelain">Contact</a></li>
+      </ul>
+    </div>
+    <div>
+      <p class="text-xs tracking-[0.2em] uppercase text-gold mb-4">Visit</p>
+      <p class="text-sm leading-relaxed">Colombo Atelier<br>By appointment only</p>
+    </div>
+  </div>
+  <div class="max-w-7xl mx-auto px-6 md:px-10 border-t border-porcelain/10 pt-6 text-xs text-porcelain/40 flex flex-col sm:flex-row justify-between gap-2">
+    <span>&copy; 2026 Cirenne Cosmetics. Demo site.</span>
+    <span>Made for demonstration purposes</span>
+  </div>
+</footer>
+
+<script>
+  // header background on scroll
+  const header = document.getElementById('site-header');
+  window.addEventListener('scroll', () => {
+    if (window.scrollY > 60) {
+      header.classList.add('bg-plum/95', 'backdrop-blur', 'shadow-md');
+    } else {
+      header.classList.remove('bg-plum/95', 'backdrop-blur', 'shadow-md');
+    }
+  });
+
+  // reveal on scroll
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('in');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.15 });
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+</script>
+
+</body>
+</html>
